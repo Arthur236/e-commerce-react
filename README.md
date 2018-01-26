@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/Arthur236/e-commerce-react.svg?branch=master)](https://travis-ci.org/Arthur236/e-commerce-react)   [![Coverage Status](https://coveralls.io/repos/github/Arthur236/e-commerce-react/badge.svg?branch=master)](https://coveralls.io/github/Arthur236/e-commerce-react?branch=master)
+[![Build Status](https://travis-ci.org/Arthur236/e-commerce-react.svg?branch=master)](https://travis-ci.org/Arthur236/e-commerce-react)   [![Coverage Status](https://coveralls.io/repos/github/Arthur236/e-commerce-react/badge.svg?branch=master)](https://coveralls.io/github/Arthur236/e-commerce-react?branch=master)   [![Codacy Badge](https://api.codacy.com/project/badge/Grade/446395c7c6984ce0878b8f5e54b11823)](https://www.codacy.com/app/Arthur236/e-commerce-react?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Arthur236/e-commerce-react&amp;utm_campaign=Badge_Grade)
 
 # E-Commerce React
 
-UI implementation of th eCommerce API.
+UI implementation of the e-commerce API.
 
 ## Features
 
