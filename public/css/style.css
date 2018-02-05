@@ -71,6 +71,7 @@ html, body {
 }
 
 #price_tag {
+    position: relative;
     border-radius: 0;
     background: #444;
     box-shadow: 2px 2px 2px 0 rgba(34,36,38,.6);
@@ -79,10 +80,14 @@ html, body {
     width: 50%;
     max-width: 50%;
     text-align: center;
-    top: 21.5em;
+    top: 3.5em;
     left: 30%;
 }
 
 #product_segment {
     padding-bottom: 2em;
+}
+
+.section_header {
+    margin-top: 50px;
 }

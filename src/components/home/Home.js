@@ -1,39 +1,53 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {Container, Grid, Image, Label, Segment} from 'semantic-ui-react';
-import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {Container, Grid} from 'semantic-ui-react';
 import Navigation from "../common/Navigation";
+import ProductTag from "../products/ProductTag"
 
 export class Home extends Component {
     render() {
+        let products = [
+            {
+                "price": "Ksh. 17,000",
+                "image": process.env.PUBLIC_URL + '/img/air jordan 11 retro.jpg'
+            },
+            {
+                "price": "Ksh. 14,000",
+                "image": process.env.PUBLIC_URL + '/img/air jordan 6 retro.jpg'
+            },
+            {
+                "price": "Ksh. 11,000",
+                "image": process.env.PUBLIC_URL + '/img/air jordan 4 retro.jpg'
+            }
+        ];
+
         return (
             <div>
                 <Navigation/>
 
                 <Container className="content">
-                    <h2>Featured Products</h2>
+                    <h2 className="section_header">Recommended Products</h2>
 
                     <Grid stackable columns={3}>
-                        <Grid.Column>
-                            <Segment id="product_segment">
-                                <Label floating id="price_tag">Ksh. 17,000</Label>
-                                <Image src={process.env.PUBLIC_URL + '/img/air jordan 11 retro.jpg'}/>
-                            </Segment>
-                        </Grid.Column>
-                        <Grid.Column>
-                            <Segment id="product_segment">
-                                <Label floating id="price_tag">Ksh. 14,000</Label>
-                                <Image src={process.env.PUBLIC_URL + '/img/air jordan 6 retro.jpg'}/>
-                            </Segment>
-                        </Grid.Column>
-                        <Grid.Column>
-                            <Segment id="product_segment">
-                                <Label floating id="price_tag">Ksh. 11,000</Label>
-                                <Image src={process.env.PUBLIC_URL + '/img/air jordan 11 retro.jpg'}/>
-                            </Segment>
-                        </Grid.Column>
+                        {_.map(products, product =>
+                            <Grid.Column>
+                                <ProductTag
+                                    price={product.price}
+                                    image={product.image}/>
+                            </Grid.Column>
+                        )}
+                    </Grid>
+
+                    <h2 className="section_header">Featured Products</h2>
+
+                    <Grid stackable columns={3}>
+                        {_.map(products, product =>
+                            <Grid.Column>
+                                <ProductTag
+                                    price={product.price}
+                                    image={product.image}/>
+                            </Grid.Column>
+                        )}
                     </Grid>
                 </Container>
             </div>

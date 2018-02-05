@@ -1,12 +1,8 @@
-import _ from 'lodash';
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {Container, Icon, Input, Label, Menu} from 'semantic-ui-react';
-import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
 
 export class Navigation extends Component {
-    state = {activeItem: 'common'};
+    state = {activeItem: "common"};
 
     handleItemClick = (e, {name}) => this.setState({activeItem: name});
 
@@ -36,7 +32,8 @@ export class Navigation extends Component {
                         <Menu.Item name="home" active={activeItem === "home"} onClick={this.handleItemClick}/>
                         <Menu.Item name="about" active={activeItem === "about"} onClick={this.handleItemClick}/>
                         <Menu.Item name="contact" active={activeItem === "contact"} onClick={this.handleItemClick}/>
-                        <Menu.Item name='logout' active={activeItem === "logout"} onClick={this.handleItemClick}/>
+                        <Menu.Item name='register' active={activeItem === "register"} onClick={this.handleItemClick}/>
+                        <Menu.Item name='login' active={activeItem === "login"} onClick={this.handleItemClick}/>
                     </Menu.Menu>
                 </Menu>
             </Container>
