@@ -1,16 +1,16 @@
 import expect from 'expect';
 import {shallow} from 'enzyme';
 import React from 'react';
-import {Home} from '../Home';
+import ProductTag from '../ProductTag';
 
 describe('Test Cases For Home', () => {
     let wrapper = null;
 
     beforeEach(() => {
-        wrapper = shallow(<Home/>);
+        wrapper = shallow(<ProductTag/>);
     });
 
-    it('renders grids correctly', () => {
-        expect(wrapper.find('Grid').length).toBe(2);
+    it('renders correctly', () => {
+        expect(wrapper.find('Segment').length).toBe(1);
     });
 });

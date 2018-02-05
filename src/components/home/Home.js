@@ -1,11 +1,15 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {Container, Grid} from 'semantic-ui-react';
+import {Breadcrumb, Container, Grid} from 'semantic-ui-react';
 import Navigation from "../common/Navigation";
 import ProductTag from "../products/ProductTag"
 
 export class Home extends Component {
     render() {
+        const sections = [
+            { key: 'Home', content: 'Home', active: true },
+        ];
+
         let products = [
             {
                 "price": "Ksh. 17,000",
@@ -26,7 +30,9 @@ export class Home extends Component {
                 <Navigation/>
 
                 <Container className="content">
-                    <h2 className="section_header">Recommended Products</h2>
+                    <Breadcrumb icon='right angle' sections={sections} />
+
+                    <h2>Recommended Products</h2>
 
                     <Grid stackable columns={3}>
                         {_.map(products, product =>
