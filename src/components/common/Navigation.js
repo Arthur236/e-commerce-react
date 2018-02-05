@@ -1,44 +1,39 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {Link} from 'react-router-dom';
 import {Container, Icon, Input, Label, Menu} from 'semantic-ui-react';
 
-export class Navigation extends Component {
-    state = {activeItem: "common"};
+const Navigation = ({history}) => {
+    const pathname = history.location.pathname;
 
-    handleItemClick = (e, {name}) => this.setState({activeItem: name});
-
-    render() {
-        const {activeItem} = this.state;
-
-        return (
-            <Container>
-                <Menu secondary>
-                    <Menu.Menu position="left">
-                        <h1 className="banner">eCommerce</h1>
-                    </Menu.Menu>
-                    <Menu.Menu position="right">
-                        <Menu.Item>
-                            <Input icon="search" placeholder="Search..."/>
-                        </Menu.Item>
-                        <Menu.Item>
-                            <Icon.Group size='large'>
-                                <Icon name='shop'/>
-                                <Label size="mini" circular floating>2</Label>
-                            </Icon.Group>
-                        </Menu.Item>
-                    </Menu.Menu>
-                </Menu>
-                <Menu secondary>
-                    <Menu.Menu position="right">
-                        <Menu.Item name="home" active={activeItem === "home"} onClick={this.handleItemClick}/>
-                        <Menu.Item name="about" active={activeItem === "about"} onClick={this.handleItemClick}/>
-                        <Menu.Item name="contact" active={activeItem === "contact"} onClick={this.handleItemClick}/>
-                        <Menu.Item name='register' active={activeItem === "register"} onClick={this.handleItemClick}/>
-                        <Menu.Item name='login' active={activeItem === "login"} onClick={this.handleItemClick}/>
-                    </Menu.Menu>
-                </Menu>
-            </Container>
-        );
-    }
-}
+    return (
+        <Container>
+            <Menu secondary stackable>
+                <Menu.Menu position="left">
+                    <h1 className="banner">eCommerce</h1>
+                </Menu.Menu>
+                <Menu.Menu position="right">
+                    <Menu.Item>
+                        <Input icon="search" placeholder="Search..."/>
+                    </Menu.Item>
+                    <Menu.Item>
+                        <Icon.Group size='large'>
+                            <Icon name='shop'/>
+                            <Label size="mini" circular floating>2</Label>
+                        </Icon.Group>
+                    </Menu.Item>
+                </Menu.Menu>
+            </Menu>
+            <Menu secondary stackable>
+                <Menu.Menu position="right">
+                    <Link to="/" className={pathname === '/' ? "active item" : "item"}>Home</Link>
+                    <Link to="/" className={pathname === '/about' ? "active item" : "item"}>About</Link>
+                    <Link to="/" className={pathname === '/contact' ? "active item" : "item"}>Contact</Link>
+                    <Link to="/register" className={pathname === '/register' ? "active item" : "item"}>Register</Link>
+                    <Link to="/" className={pathname === '/logout' ? "active item" : "item"}>Logout</Link>
+                </Menu.Menu>
+            </Menu>
+        </Container>
+    );
+};
 
 export default Navigation;

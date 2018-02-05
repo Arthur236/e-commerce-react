@@ -58,8 +58,12 @@ html, body {
 
 /********************* Common *********************/
 
-.content {
+.page_content {
     padding-top: 30px;
+}
+
+.errorText {
+    color: #9f3a38;
 }
 
 /********************* Home *********************/

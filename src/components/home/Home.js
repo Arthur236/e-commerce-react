@@ -1,13 +1,15 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {Breadcrumb, Container, Grid} from 'semantic-ui-react';
 import Navigation from "../common/Navigation";
-import ProductTag from "../products/ProductTag"
+import ProductTag from "../products/ProductTag";
 
 export class Home extends Component {
     render() {
+        const {history} = this.props;
         const sections = [
-            { key: 'Home', content: 'Home', active: true },
+            {key: 'Home', content: 'Home', active: true},
         ];
 
         let products = [
@@ -27,16 +29,16 @@ export class Home extends Component {
 
         return (
             <div>
-                <Navigation/>
+                <Navigation history={history}/>
 
-                <Container className="content">
-                    <Breadcrumb icon='right angle' sections={sections} />
+                <Container className="page_content">
+                    <Breadcrumb icon='right angle' sections={sections}/>
 
                     <h2>Recommended Products</h2>
 
                     <Grid stackable columns={3}>
                         {_.map(products, product =>
-                            <Grid.Column>
+                            <Grid.Column key={product.price}>
                                 <ProductTag
                                     price={product.price}
                                     image={product.image}/>
@@ -48,7 +50,7 @@ export class Home extends Component {
 
                     <Grid stackable columns={3}>
                         {_.map(products, product =>
-                            <Grid.Column>
+                            <Grid.Column key={product.price + 1}>
                                 <ProductTag
                                     price={product.price}
                                     image={product.image}/>
@@ -61,4 +63,9 @@ export class Home extends Component {
     }
 }
 
-export default Home;
+// Map store state to component props
+export function mapStateToProps(state) {
+    return {};
+}
+
+export default connect(mapStateToProps, null)(Home);
