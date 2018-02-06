@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {Container, Icon, Input, Label, Menu} from 'semantic-ui-react';
 
@@ -16,8 +17,8 @@ const Navigation = ({history}) => {
                         <Input icon="search" placeholder="Search..."/>
                     </Menu.Item>
                     <Menu.Item>
-                        <Icon.Group size='large'>
-                            <Icon name='shop'/>
+                        <Icon.Group size="large">
+                            <Icon name="shop"/>
                             <Label size="mini" circular floating>2</Label>
                         </Icon.Group>
                     </Menu.Item>
@@ -34,6 +35,11 @@ const Navigation = ({history}) => {
             </Menu>
         </Container>
     );
+};
+
+// Validate propTypes
+Navigation.propTypes = {
+    history: PropTypes.object
 };
 
 export default Navigation;

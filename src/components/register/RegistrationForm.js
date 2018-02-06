@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import {Button, Form, Icon} from 'semantic-ui-react';
 import FormInput from '../common/FormInput';
 
-const RegistrationForm = ({user, onSave, onChange, errors}) => {
+const RegistrationForm = ({loading, user, onSave, onChange, errors}) => {
     return (
-        <Form>
+        <Form className={loading}>
             <FormInput
                 type="text"
                 name="username"
@@ -51,6 +52,15 @@ const RegistrationForm = ({user, onSave, onChange, errors}) => {
             </Button>
         </Form>
     );
+};
+
+// Validate propTypes
+RegistrationForm.propTypes = {
+    loading: PropTypes.string.isRequired,
+    user: PropTypes.object.isRequired,
+    onSave: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
 };
 
 export default RegistrationForm;

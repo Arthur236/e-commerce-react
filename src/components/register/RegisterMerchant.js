@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Breadcrumb, Container, Grid, Header} from 'semantic-ui-react';
+import {registerMerchant} from "../../actions/authActions";
 import Navigation from "../common/Navigation";
 import RegistrationForm from './RegistrationForm';
 import validate from "../../utils/formValidator";
+import * as helpers from "../../utils/helpers";
 
-class RegisterMerchant extends Component {
+export class RegisterMerchant extends Component {
     state = {
         user: {
             username: "",
@@ -31,20 +34,31 @@ class RegisterMerchant extends Component {
 
         errors = validate({username, email, password, password2});
 
+        if (Object.keys(errors).length > 0) {
+            isValid = false;
+        }
+
         this.setState({errors: errors});
         return isValid;
     }
 
     saveMerchant(event) {
+        const {history, registerMerchant} = this.props;
+        const {user} = this.state;
         event.preventDefault();
 
         if (this.formIsValid()) {
-            console.log("Saving...")
+            registerMerchant(user).then(() => {
+                if (this.props.registered) {
+                    helpers.showToast('success', 'You were registered successfully.');
+                    history.push('/login');
+                }
+            });
         }
     }
 
     render() {
-        const {history} = this.props;
+        const {history, loading} = this.props;
         const {user, errors} = this.state;
 
         const sections = [
@@ -52,18 +66,24 @@ class RegisterMerchant extends Component {
             {key: 'Register', content: 'Register', active: true},
         ];
 
+        let loadingClass = "";
+        if (loading) {
+            loadingClass = "loading";
+        }
+
         return (
             <div>
                 <Navigation history={history}/>
 
                 <Container className="page_content">
-                    <Breadcrumb icon='right angle' sections={sections}/>
+                    <Breadcrumb icon="right angle" sections={sections}/>
 
-                    <Header as='h2' textAlign='center'>CREATE AN ACCOUNT</Header>
+                    <Header as="h2" textAlign="center">CREATE A MERCHANT ACCOUNT</Header>
 
                     <Grid centered columns={2}>
                         <Grid.Column>
                             <RegistrationForm
+                                loading={loadingClass}
                                 user={user}
                                 onChange={this.updateUserState.bind(this)}
                                 onSave={this.saveMerchant.bind(this)}
@@ -76,4 +96,20 @@ class RegisterMerchant extends Component {
     }
 }
 
-export default connect(null, null)(RegisterMerchant);
+// Define prop types
+RegisterMerchant.propTypes = {
+    history: PropTypes.object.isRequired,
+    loading: PropTypes.bool.isRequired,
+    registered: PropTypes.bool.isRequired,
+    registerMerchant: PropTypes.func
+};
+
+// Map store state to component props
+export function mapStateToProps(state) {
+    return {
+        loading: state.auth.loading,
+        registered: state.auth.registered
+    };
+}
+
+export default connect(mapStateToProps, {registerMerchant})(RegisterMerchant);

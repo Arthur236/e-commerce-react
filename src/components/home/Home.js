@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
+import PropTypes from "prop-types";
 import {connect} from 'react-redux';
 import {Breadcrumb, Container, Grid} from 'semantic-ui-react';
 import Navigation from "../common/Navigation";
@@ -32,7 +33,7 @@ export class Home extends Component {
                 <Navigation history={history}/>
 
                 <Container className="page_content">
-                    <Breadcrumb icon='right angle' sections={sections}/>
+                    <Breadcrumb icon="right angle" sections={sections}/>
 
                     <h2>Recommended Products</h2>
 
@@ -62,6 +63,11 @@ export class Home extends Component {
         );
     }
 }
+
+// Validate propTypes
+Home.propTypes = {
+    history: PropTypes.object
+};
 
 // Map store state to component props
 export function mapStateToProps(state) {

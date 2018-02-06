@@ -6,8 +6,13 @@ import ProductTag from '../ProductTag';
 describe('Test Cases For Home', () => {
     let wrapper = null;
 
+    const props = {
+        price: "",
+        image: ""
+    };
+
     beforeEach(() => {
-        wrapper = shallow(<ProductTag/>);
+        wrapper = shallow(<ProductTag {...props}/>);
     });
 
     it('renders correctly', () => {
