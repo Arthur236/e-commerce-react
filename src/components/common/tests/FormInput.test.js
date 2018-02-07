@@ -3,7 +3,7 @@ import {shallow} from 'enzyme';
 import React from 'react';
 import FormInput from '../FormInput';
 
-describe('Test Cases For Navigation', () => {
+describe('Test Cases For FormInput', () => {
     let wrapper = null;
 
     const props = {

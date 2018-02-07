@@ -8,7 +8,7 @@ import RegistrationForm from './RegistrationForm';
 import validate from '../../utils/formValidator';
 import * as helpers from "../../utils/helpers";
 
-class RegisterUser extends Component {
+export class RegisterUser extends Component {
     state = {
         user: {
             username: "",
