@@ -13,6 +13,14 @@ const mockStore = configureMockStore(middleware);
 const userPayload = {username: 'User 1', email: 'user1@gmail.com', password: 'password'};
 const emptyResponse = {};
 
+const localStorageMock = {
+    getItem: () => {},
+    setItem: () => {},
+    removeItem: () => {}
+};
+
+global.localStorage = localStorageMock;
+
 describe('Tests For RegisterUser Actions', () => {
     afterEach(() => {
         mockAxios.reset();
@@ -81,6 +89,56 @@ describe('Tests For RegisterMerchant Actions', () => {
 
             expect(actionTypes).toEqual(expectedActions);
         }).catch(() => {
+        });
+    });
+});
+
+describe('Tests For Log In Actions', () => {
+    afterEach(() => {
+        mockAxios.reset();
+    });
+
+    const payLoad = {
+        "message": "You logged in successfully."
+    };
+
+    it('should log in successfully', () => {
+        mockAxios.onPost('/auth/login').reply(200, payLoad);
+
+        const expectedActions = [
+            {type: types.LOGIN_REQUEST},
+            {type: types.LOGIN_SUCCESS, response: payLoad},
+        ];
+
+        const store = mockStore({});
+
+        return store.dispatch(authActions.login(userPayload)).then(() => {
+
+            const dispatchedActions = store.getActions();
+            const actionTypes = dispatchedActions.map(action => action.type);
+
+            expect(actionTypes).toEqual(expectedActions);
+        }).catch(() => {});
+    });
+
+    it('returns an object with the type of LOGIN_REQUEST', function () {
+        expect(authActions.loginRequest(userPayload)).toEqual({
+            type: types.LOGIN_REQUEST,
+            user: userPayload
+        });
+    });
+
+    it('returns an object with the type of LOGIN_SUCCESS', function () {
+        expect(authActions.loginSuccess(emptyResponse)).toEqual({
+            type: types.LOGIN_SUCCESS,
+            response: emptyResponse
+        });
+    });
+
+    it('returns an object with the type of LOGIN_FAIL', function () {
+        expect(authActions.loginFail(emptyResponse)).toEqual({
+            type: types.LOGIN_FAIL,
+            response: emptyResponse
         });
     });
 });

@@ -47,4 +47,40 @@ describe('Test Cases For Auth Reducer', () => {
         expect(state.registered).toBe(false);
         expect(state.loading).toBe(false);
     });
+
+    it('should handle LOGIN_REQUEST', () => {
+        action.type = types.LOGIN_REQUEST;
+        action.user = userPayload;
+
+        let state = reducer(initialState, action);
+
+        expect(state.loggedIn).toBe(false);
+        expect(state.loading).toBe(true);
+        expect(state.user).toBe("user1@gmail.com");
+    });
+
+    it('should handle LOGIN_SUCCESS', () => {
+        action.type = types.LOGIN_SUCCESS;
+        action.response = {
+            "access_token": "some_long_token_string",
+            "message": "You logged in successfully."
+        };
+
+        let state = reducer(initialState, action);
+
+        expect(state.loggedIn).toBe(true);
+        expect(state.loading).toBe(false);
+    });
+
+    it('should handle LOGIN_FAIL', () => {
+        action.type = types.LOGIN_FAIL;
+        action.response = {
+            "message": "Login failed."
+        };
+
+        let state = reducer(initialState, action);
+
+        expect(state.loggedIn).toBe(false);
+        expect(state.loading).toBe(false);
+    });
 });

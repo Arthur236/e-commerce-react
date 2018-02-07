@@ -59,3 +59,47 @@ export function registerFail(response) {
         response
     };
 }
+
+// Log in a user
+export function login(values) {
+    return function (dispatch) {
+        dispatch(loginRequest(values));
+
+        return helpers.instance.post(
+            "/auth/login/",
+            values
+        ).then(response => {
+            localStorage.setItem('token', response.data.token);
+            helpers.setAuthorizationToken(response.data.token);
+
+            dispatch(loginSuccess(response));
+        }).catch(error => {
+            dispatch(loginFail(error));
+            errorHandling.catchError(error);
+        });
+    };
+}
+
+// Initiate login request
+export function loginRequest(user) {
+    return {
+        type: actionTypes.LOGIN_REQUEST,
+        user
+    };
+}
+
+// Handle login success
+export function loginSuccess(response) {
+    return {
+        type: actionTypes.LOGIN_SUCCESS,
+        response
+    };
+}
+
+// Handle login failure
+export function loginFail(response) {
+    return {
+        type: actionTypes.LOGIN_FAIL,
+        response
+    };
+}

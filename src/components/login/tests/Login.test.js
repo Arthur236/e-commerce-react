@@ -1,21 +1,20 @@
 import expect from 'expect';
 import {shallow} from 'enzyme';
-import {spy} from 'sinon';
 import React from 'react';
-import {RegisterUser, mapStateToProps} from '../RegisterUser';
+import {Login, mapStateToProps} from '../Login';
 
-describe('Test Cases For RegisterUser', () => {
+describe('Test Cases For Login', () => {
     let wrapper = null;
 
     const props = {
         history: {},
         loading: false,
-        registered: false,
-        registerUser: () => {}
+        loggedIn: false,
+        login: () => {}
     };
 
     beforeEach(() => {
-        wrapper = shallow(<RegisterUser {...props}/>);
+        wrapper = shallow(<Login {...props}/>);
     });
 
     it('renders correctly', () => {
@@ -24,19 +23,19 @@ describe('Test Cases For RegisterUser', () => {
 
     it('sets loading state on form correctly correctly', () => {
         wrapper.setProps({loading: true});
-        expect(wrapper.find('RegistrationForm').dive().find('.loading').length).toBe(1);
+        expect(wrapper.find('LoginForm').dive().find('.loading').length).toBe(1);
     });
 
     it('correctly maps state to props', () => {
         const state = {
             auth: {
                 loading: false,
-                registered: false
+                loggedIn: false
             }
         };
         const expected = {
             loading: false,
-            registered: false
+            loggedIn: false
         };
 
         expect(mapStateToProps(state)).toEqual(expected);

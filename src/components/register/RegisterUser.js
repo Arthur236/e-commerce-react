@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import {Breadcrumb, Container, Grid, Header} from 'semantic-ui-react';
 import {registerUser} from "../../actions/authActions";
 import Navigation from "../common/Navigation";
@@ -62,7 +63,7 @@ export class RegisterUser extends Component {
         const {user, errors} = this.state;
 
         const sections = [
-            {key: 'Home', content: 'Home', link: true},
+            {key: 'Home', content: <Link to="/">Home</Link>},
             {key: 'Register', content: 'Register', active: true},
         ];
 

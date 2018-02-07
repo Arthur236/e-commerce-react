@@ -3,19 +3,17 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Breadcrumb, Container, Grid, Header} from 'semantic-ui-react';
-import {registerMerchant} from "../../actions/authActions";
+import {login} from "../../actions/authActions";
 import Navigation from "../common/Navigation";
-import RegistrationForm from './RegistrationForm';
-import validate from "../../utils/formValidator";
+import LoginForm from './LoginForm';
+import validate from '../../utils/formValidator';
 import * as helpers from "../../utils/helpers";
 
-export class RegisterMerchant extends Component {
+export class Login extends Component {
     state = {
         user: {
-            username: "",
             email: "",
-            password: "",
-            password2: ""
+            password: ""
         },
         errors: {}
     };
@@ -31,28 +29,30 @@ export class RegisterMerchant extends Component {
     formIsValid() {
         let isValid = true;
         let errors = {};
-        let {username, email, password, password2} = this.state.user;
+        let {email, password} = this.state.user;
 
-        errors = validate({username, email, password, password2});
+        errors = validate({email, password});
 
         if (Object.keys(errors).length > 0) {
             isValid = false;
         }
 
         this.setState({errors: errors});
+        console.log(isValid);
+        console.log(errors);
         return isValid;
     }
 
-    saveMerchant(event) {
-        const {history, registerMerchant} = this.props;
+    loginUser(event) {
+        const {history, login} = this.props;
         const {user} = this.state;
         event.preventDefault();
 
         if (this.formIsValid()) {
-            registerMerchant(user).then(() => {
-                if (this.props.registered) {
-                    helpers.showToast('success', 'You were registered successfully.');
-                    history.push('/login');
+            login(user).then(() => {
+                if (this.props.loggedIn) {
+                    helpers.showToast('success', 'You were logged in successfully.');
+                    history.push('/');
                 }
             });
         }
@@ -64,7 +64,7 @@ export class RegisterMerchant extends Component {
 
         const sections = [
             {key: 'Home', content: <Link to="/">Home</Link>},
-            {key: 'Register', content: 'Register', active: true},
+            {key: 'Login', content: 'Login', active: true},
         ];
 
         let loadingClass = "";
@@ -79,15 +79,15 @@ export class RegisterMerchant extends Component {
                 <Container className="page_content">
                     <Breadcrumb icon="right angle" sections={sections}/>
 
-                    <Header as="h2" textAlign="center">CREATE A MERCHANT ACCOUNT</Header>
+                    <Header as="h2" textAlign="center">LOG IN</Header>
 
                     <Grid centered columns={2}>
                         <Grid.Column>
-                            <RegistrationForm
+                            <LoginForm
                                 loading={loadingClass}
                                 user={user}
                                 onChange={this.updateUserState.bind(this)}
-                                onSave={this.saveMerchant.bind(this)}
+                                onClick={this.loginUser.bind(this)}
                                 errors={errors}/>
                         </Grid.Column>
                     </Grid>
@@ -98,19 +98,19 @@ export class RegisterMerchant extends Component {
 }
 
 // Define prop types
-RegisterMerchant.propTypes = {
+Login.propTypes = {
     history: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
-    registered: PropTypes.bool.isRequired,
-    registerMerchant: PropTypes.func
+    loggedIn: PropTypes.bool.isRequired,
+    login: PropTypes.func
 };
 
 // Map store state to component props
 export function mapStateToProps(state) {
     return {
         loading: state.auth.loading,
-        registered: state.auth.registered
+        loggedIn: state.auth.loggedIn
     };
 }
 
-export default connect(mapStateToProps, {registerMerchant})(RegisterMerchant);
+export default connect(mapStateToProps, {login})(Login);

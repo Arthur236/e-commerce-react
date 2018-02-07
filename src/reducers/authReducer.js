@@ -24,6 +24,28 @@ export default function (state = initialState, action) {
                 loading: false
             };
 
+        case actionTypes.LOGIN_REQUEST:
+            return {
+                ...state,
+                loggedIn: false,
+                loading: true,
+                user: action.user.email
+            };
+
+        case actionTypes.LOGIN_SUCCESS:
+            return {
+                ...state,
+                loggedIn: true,
+                loading: false
+            };
+
+        case actionTypes.LOGIN_FAIL:
+            return {
+                ...state,
+                loggedIn: false,
+                loading: false
+            };
+
         default:
             return state;
     }
