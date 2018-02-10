@@ -1,5 +1,6 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
+import Authenticate from './components/common/Authenticate';
 import Home from './components/home/Home';
 import RegisterUser from './components/register/RegisterUser';
 import RegisterMerchant from './components/register/RegisterMerchant';
