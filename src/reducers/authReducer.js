@@ -28,15 +28,15 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 loggedIn: false,
-                loading: true,
-                user: action.user.email
+                loading: true
             };
 
         case actionTypes.LOGIN_SUCCESS:
             return {
                 ...state,
                 loggedIn: true,
-                loading: false
+                loading: false,
+                activeUser: action.response
             };
 
         case actionTypes.LOGIN_FAIL:
@@ -44,6 +44,13 @@ export default function (state = initialState, action) {
                 ...state,
                 loggedIn: false,
                 loading: false
+            };
+
+        case actionTypes.LOGOUT_REQUEST:
+            return {
+                ...state,
+                loggedIn: false,
+                activeUser: {}
             };
 
         default:

@@ -7,7 +7,7 @@ import {registerUser} from "../../actions/authActions";
 import Navigation from "../common/Navigation";
 import RegistrationForm from './RegistrationForm';
 import validate from '../../utils/formValidator';
-import * as helpers from "../../utils/helpers";
+import {showToast} from "../../utils/helpers";
 
 export class RegisterUser extends Component {
     state = {
@@ -51,7 +51,7 @@ export class RegisterUser extends Component {
         if (this.formIsValid()) {
             registerUser(user).then(() => {
                 if (this.props.registered) {
-                    helpers.showToast('success', 'You were registered successfully.');
+                    showToast('success', 'You were registered successfully.');
                     history.push('/login');
                 }
             });

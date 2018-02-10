@@ -56,7 +56,6 @@ describe('Test Cases For Auth Reducer', () => {
 
         expect(state.loggedIn).toBe(false);
         expect(state.loading).toBe(true);
-        expect(state.user).toBe("user1@gmail.com");
     });
 
     it('should handle LOGIN_SUCCESS', () => {

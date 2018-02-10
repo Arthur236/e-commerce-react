@@ -1,4 +1,4 @@
-import * as helpers from '../utils/helpers';
+import {instance, setAuthorizationToken} from "../utils/helpers";
 import * as actionTypes from './actionTypes';
 import * as errorHandling from '../utils/errorHandling';
 
@@ -7,7 +7,7 @@ export function registerUser(values) {
     return function (dispatch) {
         dispatch(registerRequest(values));
 
-        return helpers.instance.post(
+        return instance.post(
             "/auth/register/",
             values
         ).then(response => {
@@ -24,7 +24,7 @@ export function registerMerchant(values) {
     return function (dispatch) {
         dispatch(registerRequest(values));
 
-        return helpers.instance.post(
+        return instance.post(
             "/auth/merchant-register/",
             values
         ).then(response => {
@@ -65,12 +65,12 @@ export function login(values) {
     return function (dispatch) {
         dispatch(loginRequest(values));
 
-        return helpers.instance.post(
+        return instance.post(
             "/auth/login/",
             values
         ).then(response => {
             localStorage.setItem('token', response.data.token);
-            helpers.setAuthorizationToken(response.data.token);
+            setAuthorizationToken(response.data.token);
 
             dispatch(loginSuccess(response));
         }).catch(error => {
@@ -101,5 +101,21 @@ export function loginFail(response) {
     return {
         type: actionTypes.LOGIN_FAIL,
         response
+    };
+}
+
+// Log out a user
+export function logout() {
+    return function (dispatch) {
+        localStorage.removeItem("token");
+        setAuthorizationToken(false);
+        dispatch(logoutRequest());
+    };
+}
+
+// Handle log out request
+export function logoutRequest() {
+    return {
+        type: actionTypes.LOGOUT_REQUEST
     };
 }

@@ -38,8 +38,6 @@ export class Login extends Component {
         }
 
         this.setState({errors: errors});
-        console.log(isValid);
-        console.log(errors);
         return isValid;
     }
 
