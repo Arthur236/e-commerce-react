@@ -82,4 +82,12 @@ describe('Test Cases For Auth Reducer', () => {
         expect(state.loggedIn).toBe(false);
         expect(state.loading).toBe(false);
     });
+
+    it('should handle LOGOUT_REQUEST', () => {
+        action.type = types.LOGOUT_REQUEST;
+
+        let state = reducer(initialState, action);
+
+        expect(state.loggedIn).toBe(false);
+    });
 });

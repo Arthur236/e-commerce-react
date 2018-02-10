@@ -6,7 +6,7 @@ import {Container, Dropdown, Icon, Input, Label, Menu} from 'semantic-ui-react';
 import {logout} from '../../actions/authActions';
 import {showToast} from "../../utils/helpers";
 
-class Navigation extends Component {
+export class Navigation extends Component {
     logout(e) {
         // Log out a user
         e.preventDefault();
@@ -97,11 +97,11 @@ class Navigation extends Component {
 
 // Validate propTypes
 Navigation.propTypes = {
-    history: PropTypes.string.isRequired,
+    history: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
     loggedIn: PropTypes.bool.isRequired,
     activeUser: PropTypes.object.isRequired,
-    logout: PropTypes.func.isRequired,
+    logout: PropTypes.func,
 };
 
 // Map store state to component props

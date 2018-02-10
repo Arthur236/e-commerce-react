@@ -69,9 +69,4 @@ Home.propTypes = {
     history: PropTypes.object
 };
 
-// Map store state to component props
-export function mapStateToProps(state) {
-    return {};
-}
-
-export default connect(mapStateToProps, null)(Home);
+export default connect(null, null)(Home);

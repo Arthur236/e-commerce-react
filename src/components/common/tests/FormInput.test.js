@@ -1,7 +1,10 @@
 import expect from 'expect';
-import {shallow} from 'enzyme';
+import {configure, shallow} from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import FormInput from '../FormInput';
+
+configure({adapter: new Adapter()});
 
 describe('Test Cases For FormInput', () => {
     let wrapper = null;

@@ -142,3 +142,23 @@ describe('Tests For Log In Actions', () => {
         });
     });
 });
+
+describe('Tests For Log Out Actions', () => {
+    it('should log out successfully', () => {
+        const expectedActions = [
+            {type: types.LOGOUT_REQUEST}
+        ];
+
+        const store = mockStore({});
+
+        store.dispatch(authActions.logout());
+        expect(store.getActions()).toEqual(expectedActions);
+        expect(localStorageMock.removeItem.toHaveBeenCalled);
+    });
+
+    it('returns an object with the type of LOGOUT_REQUEST', function () {
+        expect(authActions.logoutRequest()).toEqual({
+            type: types.LOGOUT_REQUEST
+        });
+    });
+});
