@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Container, Dropdown, Icon, Input, Label, Menu} from 'semantic-ui-react';
 import {logout} from '../../actions/authActions';
@@ -15,19 +15,16 @@ export class Navigation extends Component {
     }
 
     render() {
-        const {pathname} = this.props.history.location;
         let {activeUser, loggedIn} = this.props;
 
-        const homeLink = <Link to="/" className={pathname === '/' ? "active item" : "item"}>Home</Link>;
-        const aboutLink = <Link to="/" className={pathname === '/about' ? "active item" : "item"}>About</Link>;
-        const contactLink = <Link to="/" className={pathname === '/contact' ? "active item" : "item"}>Contact</Link>;
-        const registerLink = <Link to="/register"
-                                   className={pathname === '/register' ? "active item" : "item"}>Register</Link>;
-        const loginLink = <Link to="/login"
-                                className={pathname === '/login' ? "active item" : "item"}>Login</Link>;
-        const profileLink = <Link to={"/profile/" + activeUser.username} id="dropdownLink">Profile</Link>;
-        const storeLink = <Link to="/stores" id="dropdownLink">My Stores</Link>;
-        const logoutLink = <a onClick={this.logout.bind(this)} id="dropdownLink">Sign Out</a>;
+        let homeLink = <NavLink exact to="/" className="item">Home</NavLink>;
+        let aboutLink = <NavLink to="/about" className="item">About</NavLink>;
+        let contactLink = <NavLink to="/contact" className="item">Contact</NavLink>;
+        let registerLink = <NavLink to="/register" className="item">Register</NavLink>;
+        let loginLink = <NavLink to="/login" className="item">Login</NavLink>;
+        let profileLink = <Link to={"/profile/" + activeUser.username} id="dropdownLink">Profile</Link>;
+        let storeLink = <Link to="/stores" id="dropdownLink">My Stores</Link>;
+        let logoutLink = <a onClick={this.logout.bind(this)} id="dropdownLink">Sign Out</a>;
 
         const userLinks = (
             <Menu.Menu position="right">
@@ -97,7 +94,6 @@ export class Navigation extends Component {
 
 // Validate propTypes
 Navigation.propTypes = {
-    history: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
     loggedIn: PropTypes.bool.isRequired,
     activeUser: PropTypes.object.isRequired,
@@ -113,4 +109,4 @@ export function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, {logout})(Navigation);
+export default connect(mapStateToProps, {logout}, null, {pure: false})(Navigation);

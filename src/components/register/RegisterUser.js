@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Breadcrumb, Container, Grid, Header} from 'semantic-ui-react';
 import {registerUser} from "../../actions/authActions";
-import Navigation from "../common/Navigation";
 import RegistrationForm from './RegistrationForm';
 import validate from '../../utils/formValidator';
 import {showToast} from "../../utils/helpers";
@@ -59,7 +58,7 @@ export class RegisterUser extends Component {
     }
 
     render() {
-        const {history, loading} = this.props;
+        const {loading} = this.props;
         const {user, errors} = this.state;
 
         const sections = [
@@ -74,8 +73,6 @@ export class RegisterUser extends Component {
 
         return (
             <div>
-                <Navigation history={history}/>
-
                 <Container className="page_content">
                     <Breadcrumb icon="right angle" sections={sections}/>
 
@@ -99,7 +96,6 @@ export class RegisterUser extends Component {
 
 // Define prop types
 RegisterUser.propTypes = {
-    history: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
     registered: PropTypes.bool.isRequired,
     registerUser: PropTypes.func

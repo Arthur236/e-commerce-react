@@ -3,12 +3,10 @@ import React, {Component} from 'react';
 import PropTypes from "prop-types";
 import {connect} from 'react-redux';
 import {Breadcrumb, Container, Grid} from 'semantic-ui-react';
-import Navigation from "../common/Navigation";
 import ProductTag from "../products/ProductTag";
 
 export class Home extends Component {
     render() {
-        const {history} = this.props;
         const sections = [
             {key: 'Home', content: 'Home', active: true},
         ];
@@ -30,8 +28,6 @@ export class Home extends Component {
 
         return (
             <div>
-                <Navigation history={history}/>
-
                 <Container className="page_content">
                     <Breadcrumb icon="right angle" sections={sections}/>
 
@@ -66,7 +62,7 @@ export class Home extends Component {
 
 // Validate propTypes
 Home.propTypes = {
-    history: PropTypes.object
+
 };
 
 export default connect(null, null)(Home);
