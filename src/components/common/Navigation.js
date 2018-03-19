@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {notify} from 'react-notify-toast';
 import {Link, NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Container, Dropdown, Icon, Input, Label, Menu} from 'semantic-ui-react';
 import {logout} from '../../actions/authActions';
-import {showToast} from "../../utils/helpers";
 
 export class Navigation extends Component {
     logout(e) {
         // Log out a user
         e.preventDefault();
         this.props.logout();
-        showToast('success', 'You were logged out successfully.');
+        notify.show('You were logged out successfully.', 'success');
     }
 
     render() {
