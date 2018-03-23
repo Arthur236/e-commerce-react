@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {notify} from "react-notify-toast";
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Breadcrumb, Container, Grid, Header} from 'semantic-ui-react';
 import {login} from "../../actions/authActions";
 import LoginForm from './LoginForm';
 import validate from '../../utils/formValidator';
-import * as helpers from "../../utils/helpers";
 
 export class Login extends Component {
     state = {
@@ -48,7 +48,7 @@ export class Login extends Component {
         if (this.formIsValid()) {
             login(user).then(() => {
                 if (this.props.loggedIn) {
-                    helpers.showToast('success', 'You were logged in successfully.');
+                    notify.show('You were logged in successfully.', 'success');
                     history.push('/');
                 }
             });

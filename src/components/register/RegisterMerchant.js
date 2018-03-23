@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {notify} from "react-notify-toast";
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Breadcrumb, Container, Grid, Header} from 'semantic-ui-react';
 import {registerMerchant} from "../../actions/authActions";
 import RegistrationForm from './RegistrationForm';
 import validate from "../../utils/formValidator";
-import * as helpers from "../../utils/helpers";
 
 export class RegisterMerchant extends Component {
     state = {
@@ -50,7 +50,7 @@ export class RegisterMerchant extends Component {
         if (this.formIsValid()) {
             registerMerchant(user).then(() => {
                 if (this.props.registered) {
-                    helpers.showToast('success', 'You were registered successfully.');
+                    notify.show('You were registered successfully.', 'success');
                     history.push('/login');
                 }
             });

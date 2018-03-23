@@ -1,48 +1,57 @@
 import expect from 'expect';
+import moxios from 'moxios';
 import React from 'react';
 import thunk from 'redux-thunk';
-import MockAdapter from 'axios-mock-adapter';
 import configureMockStore from 'redux-mock-store';
 import * as authActions from '../authActions';
 import * as types from '../actionTypes';
 import * as helpers from '../../utils/helpers';
 
 const middleware = [thunk];
-const mockAxios = new MockAdapter(helpers.instance);
 const mockStore = configureMockStore(middleware);
+const store = mockStore({});
 const userPayload = {username: 'User 1', email: 'user1@gmail.com', password: 'password'};
 const emptyResponse = {};
 
 const localStorageMock = {
-    getItem: () => {},
-    setItem: () => {},
-    removeItem: () => {}
+    getItem: () => {
+    },
+    setItem: () => {
+    },
+    removeItem: () => {
+    }
 };
 
 global.localStorage = localStorageMock;
 
 describe('Tests For RegisterUser Actions', () => {
+    beforeEach(() => {
+        moxios.install();
+    });
+
     afterEach(() => {
-        mockAxios.reset();
+        moxios.uninstall();
     });
 
     it('should register successfully', () => {
-        mockAxios.onPost('/auth/register').reply(201, userPayload);
+        moxios.stubRequest(`/auth/register`, {
+            response: {
+                data: {
+                    userPayload
+                },
+                error: {},
+            },
+            status: 201,
+        });
 
         const expectedActions = [
             {type: types.REGISTER_REQUEST},
             {type: types.REGISTER_SUCCESS, user: userPayload},
         ];
 
-        const store = mockStore({user: {}});
-
         return store.dispatch(authActions.registerUser(userPayload)).then(() => {
-
-            const dispatchedActions = store.getActions();
-            const actionTypes = dispatchedActions.map(action => action.type);
-
-            expect(actionTypes).toEqual(expectedActions);
-        }).catch(() => {});
+            expect(store.getActions()).toEqual(expectedActions);
+        });
     });
 
     it('returns an object with the type of REGISTER_REQUEST', function () {
@@ -68,12 +77,21 @@ describe('Tests For RegisterUser Actions', () => {
 });
 
 describe('Tests For RegisterMerchant Actions', () => {
+    beforeEach(() => {
+        moxios.install();
+    });
+
     afterEach(() => {
-        mockAxios.reset();
+        moxios.uninstall();
     });
 
     it('should register successfully', () => {
-        mockAxios.onPost('/auth/merchant-register').reply(201, userPayload);
+        moxios.stubRequest(`${helpers.ROOT_URL}/auth/merchant-register`, {
+            response: {
+                userPayload
+            },
+            status: 201,
+        });
 
         const expectedActions = [
             {type: types.REGISTER_REQUEST},
@@ -83,19 +101,18 @@ describe('Tests For RegisterMerchant Actions', () => {
         const store = mockStore({user: {}});
 
         return store.dispatch(authActions.registerMerchant(userPayload)).then(() => {
-
-            const dispatchedActions = store.getActions();
-            const actionTypes = dispatchedActions.map(action => action.type);
-
-            expect(actionTypes).toEqual(expectedActions);
-        }).catch(() => {
+            expect(store.getActions()).toEqual(expectedActions);
         });
     });
 });
 
 describe('Tests For Log In Actions', () => {
+    beforeEach(() => {
+        moxios.install();
+    });
+
     afterEach(() => {
-        mockAxios.reset();
+        moxios.uninstall();
     });
 
     const payLoad = {
@@ -103,7 +120,12 @@ describe('Tests For Log In Actions', () => {
     };
 
     it('should log in successfully', () => {
-        mockAxios.onPost('/auth/login').reply(200, payLoad);
+        moxios.stubRequest(`${helpers.ROOT_URL}/auth/login`, {
+            response: {
+                userPayload
+            },
+            status: 200,
+        });
 
         const expectedActions = [
             {type: types.LOGIN_REQUEST},
@@ -113,12 +135,8 @@ describe('Tests For Log In Actions', () => {
         const store = mockStore({});
 
         return store.dispatch(authActions.login(userPayload)).then(() => {
-
-            const dispatchedActions = store.getActions();
-            const actionTypes = dispatchedActions.map(action => action.type);
-
-            expect(actionTypes).toEqual(expectedActions);
-        }).catch(() => {});
+            expect(store.getActions()).toEqual(expectedActions);
+        });
     });
 
     it('returns an object with the type of LOGIN_REQUEST', function () {

@@ -1,10 +1,10 @@
 import expect from 'expect';
 import {mount} from 'enzyme';
-import sinon from 'sinon';
 import React from 'react';
+import {notify} from 'react-notify-toast';
 import {Provider} from 'react-redux';
 import {BrowserRouter as Router} from 'react-router-dom';
-import Notifications, {notify} from 'react-notify-toast';
+import sinon from 'sinon';
 import {Navigation, mapStateToProps} from '../Navigation';
 import configureStore from "../../../store/configureStore";
 
@@ -30,7 +30,6 @@ describe('Navigation', () => {
         return mount(
             <Provider store={store}>
                 <div>
-                    <Notifications/>
                     <Router>
                         <Navigation {...props}/>
                     </Router>
@@ -64,6 +63,7 @@ describe('Navigation', () => {
         });
 
         expect(notifyStub.calledOnce).toBe(true);
+        notifyStub.restore();
     });
 
     it('correctly maps state to props', () => {

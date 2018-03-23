@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {notify} from 'react-notify-toast';
 import {connect} from 'react-redux';
-import {showToast} from "../../utils/helpers";
 
 export default function (ComposedComponent) {
     class Authenticate extends Component {
         componentWillMount() {
             if (!this.props.loggedIn) {
-                showToast('error', 'You need to be logged in to access that page');
+                notify.show('You need to be logged in to access that page', 'error');
                 this.props.history.push('/login');
             }
         }
