@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {notify} from 'react-notify-toast';
 
 export const ROOT_URL = "http://127.0.0.1:8000/api";
 
@@ -18,5 +17,3 @@ export let instance = axios.create({
         "Content-Type": "application/json",
     }
 });
-
-

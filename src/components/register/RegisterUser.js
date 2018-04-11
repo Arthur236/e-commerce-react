@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {notify} from "react-notify-toast";
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import {Breadcrumb, Container, Grid, Header} from 'semantic-ui-react';
-import {registerUser} from "../../actions/authActions";
+import {registerUserRequest} from "../../actions/authActions";
 import RegistrationForm from './RegistrationForm';
 import validate from '../../utils/formValidator';
 
@@ -43,22 +42,17 @@ export class RegisterUser extends Component {
     }
 
     saveUser(event) {
-        const {history, registerUser} = this.props;
+        const {registerUserRequest} = this.props;
         const {user} = this.state;
         event.preventDefault();
 
         if (this.formIsValid()) {
-            registerUser(user).then(() => {
-                if (this.props.registered) {
-                    notify.show('You were registered successfully.', 'success');
-                    history.push('/login');
-                }
-            });
+            registerUserRequest(user);
         }
     }
 
     render() {
-        const {loading} = this.props;
+        const {loading, registered} = this.props;
         const {user, errors} = this.state;
 
         const sections = [
@@ -69,6 +63,10 @@ export class RegisterUser extends Component {
         let loadingClass = "";
         if (loading) {
             loadingClass = "loading";
+        }
+
+        if(registered) {
+            return <Redirect to="/login"/>
         }
 
         return (
@@ -98,7 +96,7 @@ export class RegisterUser extends Component {
 RegisterUser.propTypes = {
     loading: PropTypes.bool.isRequired,
     registered: PropTypes.bool.isRequired,
-    registerUser: PropTypes.func
+    registerUserRequest: PropTypes.func
 };
 
 // Map store state to component props
@@ -109,4 +107,4 @@ export function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, {registerUser})(RegisterUser);
+export default connect(mapStateToProps, {registerUserRequest})(RegisterUser);

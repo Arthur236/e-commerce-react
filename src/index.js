@@ -5,12 +5,15 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import Notifications from 'react-notify-toast';
 import jwt from 'jsonwebtoken';
 import registerServiceWorker from './registerServiceWorker';
-import configureStore from './store/configureStore';
+import configureStore, {sagaMiddleware} from './store/configureStore';
 import routes from './routes';
+import rootSaga from "./sagas/sagas";
 import {setAuthorizationToken} from "./utils/helpers";
 import {loginSuccess} from "./actions/authActions";
 
 const store = configureStore();
+
+sagaMiddleware.run(rootSaga);
 
 if (localStorage.token) {
     setAuthorizationToken(localStorage.token);

@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {notify} from "react-notify-toast";
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import {Breadcrumb, Container, Grid, Header} from 'semantic-ui-react';
-import {login} from "../../actions/authActions";
+import {loginRequest} from "../../actions/authActions";
 import LoginForm from './LoginForm';
 import validate from '../../utils/formValidator';
 
@@ -41,22 +40,17 @@ export class Login extends Component {
     }
 
     loginUser(event) {
-        const {history, login} = this.props;
+        const {loginRequest} = this.props;
         const {user} = this.state;
         event.preventDefault();
 
         if (this.formIsValid()) {
-            login(user).then(() => {
-                if (this.props.loggedIn) {
-                    notify.show('You were logged in successfully.', 'success');
-                    history.push('/');
-                }
-            });
+            loginRequest(user);
         }
     }
 
     render() {
-        const {loading} = this.props;
+        const {loading, loggedIn} = this.props;
         const {user, errors} = this.state;
 
         const sections = [
@@ -67,6 +61,10 @@ export class Login extends Component {
         let loadingClass = "";
         if (loading) {
             loadingClass = "loading";
+        }
+
+        if(loggedIn) {
+            return <Redirect to="/"/>
         }
 
         return (
@@ -97,7 +95,7 @@ Login.propTypes = {
     history: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
     loggedIn: PropTypes.bool.isRequired,
-    login: PropTypes.func
+    loginRequest: PropTypes.func,
 };
 
 // Map store state to component props
@@ -108,4 +106,4 @@ export function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, {login})(Login);
+export default connect(mapStateToProps, {loginRequest})(Login);
